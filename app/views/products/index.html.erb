@@ -1,14 +1,39 @@
 <div class="w-full">
-  <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-  <% end %>
+	<% if notice.present? %>
+	<p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+	<% end %>
 
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Products</h1>
-    <%= link_to 'New product', new_product_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
-  </div>
+	<div class="flex justify-between items-center">
+		<h1 class="font-bold text-4xl">Products</h1>
+		<%= link_to 'New product', new_product_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+	</div>
 
-  <div id="products" class="min-w-full">
-    <%= render @products %>
-  </div>
+	<div id="products" class="min-w-full">
+		<table id="products" class="mx-auto">
+			<thead>
+				<tr>
+					<th scope="col"></th>
+				</tr>
+			</thead>
+			<tbody >
+			<% @products.each do |product| %>
+				<tr style="border-bottom:1px solid #DDDDDD">
+					<td>
+						<h1 class="text-xl font-bold mb-3"><%= link_to product.title, product, class: 'hover:underline' %></h1> 
+						<p class="w-3/4"><%= truncate(strip_tags(product.description), length: 80) %></p>
+					</td>
+					<td>
+						<%= image_tag(product, class: 'w-40 inline-block') %>
+					</td>
+					<td>
+						<ul>
+							<li><%= link_to 'Edit', edit_product_path(product), class: 'hover:underline' %></li>
+							<li><%= link_to 'Delete', product, class: 'hover:underline', data: { turbo_method: :delete, turbo_confirm: "Are you sure?"} %>					
+						</ul>
+					</td>
+				</tr>
+			<% end %>
+			</tbody>
+		</table>	
+	</div>
 </div>
